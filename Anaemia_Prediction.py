@@ -1,9 +1,6 @@
 import pandas as pd
-# import numpy as np
-# import matplotlib.pyplot as plt
-# import seaborn as sns
 import streamlit as st
-from sklearn.model_selection import train_test_split
+from sklearn import model_selection
 from sklearn.preprocessing import LabelEncoder
 from sklearn.linear_model import LogisticRegression
 import warnings
@@ -19,7 +16,7 @@ df.Anaemic=le.fit_transform(df.Anaemic)
 
 x=df.drop(['Anaemic'],axis='columns')
 y=df.Anaemic
-xtrain,xtest,ytrain,ytest=train_test_split(x,y,train_size=0.8)
+xtrain,xtest,ytrain,ytest=model_selection.train_test_split(x,y,train_size=0.8)
 
 le=LogisticRegression()
 model=le.fit(xtrain,ytrain)
@@ -31,10 +28,7 @@ Green=st.number_input("Enter your Green Pixel Value", min_value=0.0, max_value=1
 Blue=st.number_input("Enter your Blue Pixel Value", min_value=0.0, max_value=100.0, step=0.1)
 Hb=st.number_input("Enter your Hemoglobin Level", min_value=0.0, max_value=100.0, step=0.1)
 
-
-if st.button("Predict"):
-     
-    # df=pd.DataFrame({'userId': [user_id], 'movieId': [movie_id]})
+if st.button("Predict"):  
     df=pd.DataFrame({
             'Sex':[Sex],
             '%Red Pixel':[Red],
@@ -42,11 +36,8 @@ if st.button("Predict"):
             '%Blue pixel':[Blue],
             'Hb':[Hb],
         })
-    # df=pd.get_dummies(input_df, columns=['userId', 'movieId'])
-    # df=input_df.reindex(columns=X.columns, fill_value=0)  # Align colu
     predicted = model.predict(df)
     if predicted[0]==1:
         st.write('You are Anaemic')
     else:
         st.write('You have no Anaemia')
-    # st.write(f"Predicted : {predicted_rating:.2f}")
