@@ -12,7 +12,7 @@ df=pd.DataFrame(data)
 df=df.drop(['Number'],axis='columns')
 le=LabelEncoder()
 df.Sex=le.fit_transform(df.Sex)
-df.Anaemic=le.fit_transform(df.Anaemic)
+df.Anaemic=le.fit_transform(df.Anaemic)   
 
 x=df.drop(['Anaemic'],axis='columns')
 y=df.Anaemic
